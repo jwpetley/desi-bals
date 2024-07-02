@@ -55,6 +55,8 @@ overleaf:
   # List of files to pull from Overleaf
   pull:
     - src/tex/ms.tex
+    - src/tex/mnras.bst
+    - src/tex/mnras.cls
     - src/tex/bib.bib
 
 # Always require all input files to be present on disk for workflow to pass?
