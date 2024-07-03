@@ -4,6 +4,7 @@ import paths
 
 from astropy.table import Table
 
+
 # Read the data
 bals = paths.data / "desi_bals_radio.fits"
 qsos = paths.data / "desi_qso_radio.fits"
@@ -87,17 +88,20 @@ def detection_fraction_err(data, bins):
     detected_hist, _ = np.histogram(detected["Z"], bins=bins)
     return detected_hist/hist, np.sqrt(detected_hist)/hist
 
-bins = np.linspace(1.5, 4, 5)
+bins = np.linspace(1.5, 4, 6)
 
 bals_frac, bals_frac_err = detection_fraction_err(bals, bins)
 ai_bals_frac, ai_bals_frac_err = detection_fraction_err(ai_bals, bins)
 qsos_frac, qsos_frac_err = detection_fraction_err(qsos, bins)
 
 
-plt.figure(figsize=(10, 5))
-plt.errorbar(bins[:-1], bals_frac, yerr=bals_frac_err, label="BI BALs")
-plt.errorbar(bins[:-1], ai_bals_frac, yerr=ai_bals_frac_err, label="AI BALs")
-plt.errorbar(bins[:-1], qsos_frac, yerr=qsos_frac_err, label="QSOs")
+plt.figure()
+plt.errorbar(bins[:-1], bals_frac, yerr=bals_frac_err, label="BI BALs",
+             capsize=4)
+plt.errorbar(bins[:-1], ai_bals_frac, yerr=ai_bals_frac_err, label="AI BALs",
+             capsize = 4)
+plt.errorbar(bins[:-1], qsos_frac, yerr=qsos_frac_err, label="QSOs",
+             capsize = 4)
 plt.xlabel("Redshift")
 plt.ylabel("Detection fraction")
 plt.legend()

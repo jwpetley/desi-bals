@@ -1,2 +1,15 @@
 # Enforce a non-interactive backend
 backend: agg
+
+#Use usetex
+text.usetex: True
+
+#TICKS
+xtick.direction: in   
+ytick.direction: in
+
+figure.figsize: 6, 4
+
+#FONT
+font.family: serif
+font.fontsize: 12
