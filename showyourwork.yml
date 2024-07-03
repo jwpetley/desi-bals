@@ -82,9 +82,9 @@ stamp:
   # Stamp size in inches
   size: 0.75
   # Horizontal position in inches from right edge of paper
-  xpos: 0.50
+  xpos: 0.75
   # Vertical position in inches from top edge of paper
-  ypos: 0.50
+  ypos: 1.50
   # Display of the repo URL in the stamp
   url:
     # Show the URL?
