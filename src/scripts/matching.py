@@ -156,7 +156,7 @@ if __name__ == "__main__":
 
     handles = []
 
-    sns.kdeplot(x = bals["Z"], y = bals["six_micron"], label="BI BALs", ax=axs[1],
+    sns.kdeplot(x = bals["Z"].newbyteorder(), y = bals["six_micron"].newbyteorder(), label="BI BALs", ax=axs[1],
                 color = "tab:orange")
     handles.append(mlines.Line2D([], [], color='tab:orange', label='BI BALs'))
     
