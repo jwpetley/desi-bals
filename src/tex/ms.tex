@@ -196,7 +196,15 @@ Try to keep it short.
 \section*{Data Availability}
 
  
-The inclusion of a Data Availability Statement is a requirement for articles published in MNRAS. Data Availability Statements provide a standardised format for readers to understand the availability of data underlying the research results described in the article. The statement may refer to original data generated in the course of the study or to third-party data analysed in the article. The statement should describe and provide means of access, where possible, by linking to the data or providing the required accession numbers for the relevant databases or DOIs.
+This study was carried out using the reproducibility software
+\href{https://github.com/showyourwork/showyourwork}{\showyourwork}
+\citep{Luger2021MappingModel}, which leverages continuous integration to
+programmatically download the data from
+\href{https://zenodo.org/}{zenodo.org}, create the figures, and
+compile the manuscript. Each figure caption contains two links: one
+to the dataset stored on zenodo used in the corresponding figure,
+and the other to the script used to make the figure (at the commit
+corresponding to the current build of the manuscript).
 
 
 
