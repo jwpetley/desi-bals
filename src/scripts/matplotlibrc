@@ -1,15 +1,41 @@
 # Enforce a non-interactive backend
 backend: agg
 
+figure.figsize: 6.6666, 4
+
 #Use usetex
 text.usetex: True
 
 #TICKS
 xtick.direction: in   
 ytick.direction: in
+xtick.labelsize: 14
+ytick.labelsize: 14
+xtick.major.size: 5
+ytick.major.size: 5
+xtick.minor.size: 3
+ytick.minor.size: 3
+xtick.major.width: 3
+ytick.major.width: 3
+xtick.minor.width: 2
+ytick.minor.width: 2
 
-figure.figsize: 6, 4
+xtick.top: True
+ytick.right: True
+
+#AXES
+axes.linewidth: 3
+axes.labelweight: bold
+axes.labelsize: 14
+
+
 
 #FONT
-font.family: serif
-font.fontsize: 12
+font.family: Nimbus Roman
+font.fontsize: 14
+pdf.fonttype: 42
+ps.fonttype: 42
+
+
+#LEGEND
+legend.frameon: False

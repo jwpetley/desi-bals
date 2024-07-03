@@ -102,8 +102,8 @@ plt.errorbar(bins[:-1], ai_bals_frac, yerr=ai_bals_frac_err, label="AI BALs",
              capsize = 4)
 plt.errorbar(bins[:-1], qsos_frac, yerr=qsos_frac_err, label="QSOs",
              capsize = 4)
-plt.xlabel("Redshift")
-plt.ylabel("Detection fraction")
+plt.xlabel(r"$z$")
+plt.ylabel("LoTSS Detection fraction")
 plt.legend()
 plt.savefig(paths.figures / "detection_fraction_z.pdf", bbox_inches = "tight",
             dpi = 300)
