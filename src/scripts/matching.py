@@ -145,11 +145,11 @@ if __name__ == "__main__":
     handles = []
 
 
-    sns.kdeplot(x = np.array(bals["Z"]), y = np.array(bals["six_micron"]), label="BI BALs", ax=axs[0],
+    sns.kdeplot(x = np.array(bals["Z"]).byteswap().newbyteorder(), y = np.array(bals["six_micron"]).byteswap().newbyteorder(), label="BI BALs", ax=axs[0],
                 color = "tab:orange")
     handles.append(mlines.Line2D([], [], color='tab:orange', label='BI BALs'))
 
-    sns.kdeplot(x = np.array(qsos["Z"]), y = np.array(qsos["six_micron"]), label="QSOs", ax=axs[0],
+    sns.kdeplot(x = np.array(qsos["Z"]).byteswap().newbyteorder(), y = np.array(qsos["six_micron"]).byteswap().newbyteorder(), label="QSOs", ax=axs[0],
                 color = "tab:blue")
     handles.append(mlines.Line2D([], [], color='tab:blue', label='QSOs'))
 
@@ -160,11 +160,11 @@ if __name__ == "__main__":
 
     handles = []
 
-    sns.kdeplot(x = np.array(bals["Z"]), y = np.array(bals["six_micron"]), label="BI BALs", ax=axs[1],
+    sns.kdeplot(x = np.array(bals["Z"]).byteswap().newbyteorder(), y = np.array(bals["six_micron"]).byteswap().newbyteorder(), label="BI BALs", ax=axs[1],
                 color = "tab:orange")
     handles.append(mlines.Line2D([], [], color='tab:orange', label='BI BALs'))
     
-    sns.kdeplot(x = np.array(matched["Z"]), y = np.array(matched["six_micron"]), label="Matched QSOs",ax=axs[1],
+    sns.kdeplot(x = np.array(matched["Z"]).byteswap().newbyteorder(), y = np.array(matched["six_micron"]).byteswap().newbyteorder(), label="Matched QSOs",ax=axs[1],
                 color = "tab:green")
     handles.append(mlines.Line2D([], [], color='tab:green', label='Matched QSOs'))
     
