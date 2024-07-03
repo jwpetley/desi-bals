@@ -1,12 +1,16 @@
 import numpy as np  
 import paths
 import astropy.units as u
+import matplotlib.pyplot as plt
+import matplotlib.lines as mlines
+import seaborn as sns
 
 from tqdm import tqdm
 from astropy.table import Table
 from sklearn.neighbors import NearestNeighbors
 from astropy.cosmology import Planck15
 from scipy.interpolate import interp1d
+from detection_fraction import AI_cut, BI_cut, flux_cut, redshift_cut, remove_bals, plot_detection_fraction
 
 def six_micron(data):
     wise_wavs = np.array([4.6e-6,12e-6])
@@ -16,12 +20,6 @@ def six_micron(data):
     luminosities = []
     
     for source in tqdm(data):
-        if str(source['w2mpro']) == 'null':
-            
-            source['w2mpro'] = 99.0
-        if str(source['w3mpro']) == 'null':
-            
-            source['w3mpro'] = 99.0
         mags = np.array([float(source['w2mpro']),
                          float(source['w3mpro'])], dtype = np.float64)
         
@@ -56,15 +54,126 @@ def six_micron(data):
         
         
         luminosity = (interp_flux*4*np.pi*(lum_dist**2))/(1+z) #What am I doing here??
+
         
         luminosities.append(np.log10(luminosity.value))
+
+        # Change nan to zero
+        if np.isnan(luminosities[-1]):
+            luminosities[-1] = -99
        
-    
         
     return np.array(luminosities)
+
+def wise_detected(data):
+    data = data[data["w3mpro"]!= "null"]
+    data = data[data["w2mpro"]!= "null"]
+    return data
+
+def z_six_micron_match(data1, data2):
+    """Use  kNN to match two datasets by redshift and 6 micron luminosity
+    
+    Return two tables with a new column "match" containing the TARGETID of the other dataset"""
+    data1 = data1.copy()
+    data2 = data2.copy()
+    
+    X1 = np.array([data1["Z"], data1["six_micron"]]).T
+    X2 = np.array([data2["Z"], data2["six_micron"]]).T
+    
+    nbrs = NearestNeighbors(n_neighbors=1, algorithm="ball_tree", radius=0.2).fit(X2)
+    distances, indices = nbrs.kneighbors(X1)
+    
+    data1["match"] = data2["TARGETID"][indices]
+    
+    matched = data2[indices.flatten()]
+
+    return matched
+
 
 if __name__ == "__main__":
     bals = Table.read(paths.data / "desi_bals_radio.fits")
     qsos = Table.read(paths.data / "desi_qso_radio.fits")
 
-    six_micron_bals = six_micron(bals)
+    bals = wise_detected(bals)
+    qsos = wise_detected(qsos)
+
+    
+    
+    ai_bals = AI_cut(bals, 1, 200000)
+    bals = BI_cut(bals, 1, 200000)
+    qsos = remove_bals(qsos, bals)
+    qsos = remove_bals(qsos, ai_bals)
+    ai_bals = remove_bals(ai_bals, bals)
+    bal = remove_bals(bals, ai_bals)
+
+    bals = redshift_cut(bals, 1.5, 4)
+    ai_bals = redshift_cut(ai_bals, 1.5, 4)
+    qsos = redshift_cut(qsos, 1.5, 4)
+
+    bals["six_micron"] = six_micron(bals)
+    qsos["six_micron"] = six_micron(qsos)
+    ai_bals["six_micron"] = six_micron(ai_bals)
+
+    bals = bals[bals["six_micron"] > 0]
+    qsos = qsos[qsos["six_micron"] > 0]
+    ai_bals = ai_bals[ai_bals["six_micron"] > 0]
+
+    matched = z_six_micron_match(bals, qsos)
+
+    matched_ai = z_six_micron_match(bals, ai_bals)
+
+    print(len(matched), len(bals), len(qsos))
+
+    plt.figure()
+
+    plt.scatter(bals["Z"], bals["six_micron"], label="BI BALs", s=1)
+    plt.scatter(qsos["Z"], qsos["six_micron"], label="QSOs", s=1)
+    plt.scatter(matched["Z"], matched["six_micron"], label="Matched QSOs", s=1)
+
+    plt.xlabel(r"$z$")
+    plt.ylabel(r"$\log_{10} L_{6 \mu m}$")
+    plt.legend()
+    plt.close()
+
+    #Same as a kde plot
+    fig, axs = plt.subplots(1, 2, sharex=True, sharey=True)
+    axs = axs.flatten()
+    handles = []
+
+
+    sns.kdeplot(x = bals["Z"], y = bals["six_micron"], label="BI BALs", ax=axs[0],
+                color = "tab:orange")
+    handles.append(mlines.Line2D([], [], color='tab:orange', label='BI BALs'))
+
+    sns.kdeplot(x = qsos["Z"], y = qsos["six_micron"], label="QSOs", ax=axs[0],
+                color = "tab:blue")
+    handles.append(mlines.Line2D([], [], color='tab:blue', label='QSOs'))
+
+    axs[0].set_xlabel(r"$z$")
+    axs[0].set_ylabel(r"$\log_{10} L_{6 \mu m}$")
+
+    axs[0].legend(handles=handles)
+
+    handles = []
+
+    sns.kdeplot(x = bals["Z"], y = bals["six_micron"], label="BI BALs", ax=axs[1],
+                color = "tab:orange")
+    handles.append(mlines.Line2D([], [], color='tab:orange', label='BI BALs'))
+    
+    sns.kdeplot(x = matched["Z"], y = matched["six_micron"], label="Matched QSOs",ax=axs[1],
+                color = "tab:green")
+    handles.append(mlines.Line2D([], [], color='tab:green', label='Matched QSOs'))
+    
+    axs[1].set_xlabel(r"$z$")
+    axs[1].set_ylabel(r"$\log_{10} L_{6 \mu m}$")
+
+    axs[1].legend(handles=handles)
+
+    plt.savefig(paths.figures / "six_micron_z.pdf", bbox_inches = "tight",
+                dpi = 300)
+
+    plot_detection_fraction(bals, matched_ai, matched, "matched_detection_fraction.pdf")
+
+    
+
+

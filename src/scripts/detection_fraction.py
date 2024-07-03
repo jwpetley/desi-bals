@@ -46,7 +46,7 @@ def detection_fraction_err(data, bins):
     detected_hist, _ = np.histogram(detected["Z"], bins=bins)
     return detected_hist/hist, np.sqrt(detected_hist)/hist
 
-def plot_detection_fraction():
+def plot_detection_fraction(bals, ai_bals, qsos, fname):
     '''Create detection fraction figure'''
 
     bins = np.linspace(1.5, 4, 6)
@@ -66,7 +66,7 @@ def plot_detection_fraction():
     plt.xlabel(r"$z$")
     plt.ylabel("LoTSS Detection fraction")
     plt.legend()
-    plt.savefig(paths.figures / "detection_fraction_z.pdf", bbox_inches = "tight",
+    plt.savefig(paths.figures / fname, bbox_inches = "tight",
                 dpi = 300)
     
 
@@ -82,6 +82,9 @@ if __name__ == "__main__":
     ai_bals = AI_cut(bals, 1, 20000)
     bals = BI_cut(bals, 1, 20000)
     qsos = remove_bals(qsos, bals)
+    qsos = remove_bals(qsos, ai_bals)
+    ai_bals = remove_bals(ai_bals, bals)
+    bals = remove_bals(bals, ai_bals)
 
     #Redshift cut
     ai_bals = redshift_cut(ai_bals, 1.5, 5)
@@ -90,4 +93,4 @@ if __name__ == "__main__":
 
 
 
-    plot_detection_fraction()
+    plot_detection_fraction(bals, ai_bals, qsos, "detection_fraction_z.pdf")

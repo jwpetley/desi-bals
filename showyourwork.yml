@@ -35,6 +35,9 @@ dependencies:
   src/scripts/detection_fraction.py:
     - src/data/desi_bals_radio.fits
     - src/data/desi_qso_radio.fits
+  src/scripts/matching.py:
+    - src/data/desi_bals_radio.fits
+    - src/data/desi_qso_radio.fits
   # src/scripts/my_script.py:
   #   - src/data/dataset_for_my_script.dat
   # src/tex/ms.tex:
