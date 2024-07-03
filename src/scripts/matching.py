@@ -12,6 +12,10 @@ from astropy.cosmology import Planck15
 from scipy.interpolate import interp1d
 from detection_fraction import AI_cut, BI_cut, flux_cut, redshift_cut, remove_bals, plot_detection_fraction
 
+def ergs(six_micron_lum):
+    return np.log10(10**six_micron_lum*(3e8/6e-6)*1e7)
+
+
 def six_micron(data):
     wise_wavs = np.array([4.6e-6,12e-6])
     zero_points = np.array([171.787, 31.674])
@@ -63,7 +67,7 @@ def six_micron(data):
             luminosities[-1] = -99
        
         
-    return np.array(luminosities)
+    return ergs(np.array(luminosities))
 
 def wise_detected(data):
     data = data[data["w3mpro"]!= "null"]
