@@ -31,7 +31,8 @@ axes.labelsize: 14
 
 
 #FONT
-font.family: Nimbus Roman
+font.family: serif
+font.serif: Nimbus Roman No9 L
 font.fontsize: 14
 pdf.fonttype: 42
 ps.fonttype: 42
