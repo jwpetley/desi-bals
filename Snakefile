@@ -11,8 +11,6 @@ rule fractions:
 rule matching:
     output:
         directory("src/data/matched")
-    cache:
-        True
     script:
         "src/scripts/matching.py"
 
