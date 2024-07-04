@@ -30,6 +30,6 @@ rule correlation:
     input:
         "src/data/matched"
     output:
-        "scr/figures/flux_bi.pdf"
+        "src/figures/flux_bi.pdf"
     script:
-        "scr/scripts/correlations.py"
+        "src/scripts/correlations.py"
