@@ -38,7 +38,7 @@ dependencies:
   src/scripts/matching.py:
     - src/data/desi_bals_radio.fits
     - src/data/desi_qso_radio.fits
-  src/scripts/matching_figures/py:
+  src/scripts/matching_figures.py:
     - src/scripts/matching.py
     - src/data/matched/
     - src/data/desi_bals_radio.fits
