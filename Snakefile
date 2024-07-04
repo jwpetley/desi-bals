@@ -24,7 +24,7 @@ rule matching_figures:
         "src/tex/figures/matched_detection_fraction.pdf"
         "src/tex/figures/six_micron_z.pdf"
     script:
-        "scr/scripts/matching.py"
+        "scr/scripts/matching_figures.py"
 
 rule correlation:
     input:

@@ -6,9 +6,9 @@ from astropy.table import Table
 
 
 if __name__ == "__main__":
-    bals = Table.read(paths.data / "matched_bals.fits")
-    bals_ai = Table.read(paths.data / "matched_ai.fits")
-    qsos = Table.read(paths.data / "matched_qsos.fits")
+    bals = Table.read(paths.data / "matched/matched_bals.fits")
+    bals_ai = Table.read(paths.data / "matched/matched_ai.fits")
+    qsos = Table.read(paths.data / "matched/matched_qsos.fits")
 
 
     plt.figure()
