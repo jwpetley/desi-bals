@@ -19,7 +19,7 @@ if __name__ == "__main__":
     bals = Table.read(paths.data / "matched/matched_bals.fits")
     matched_ai = Table.read(paths.data / "matched/matched_ai.fits")
 
-    qsos = Table.read(paths.data / "matched_qsos.fits")
+    qsos = Table.read(paths.data / "desi_qso_radio.fits")
     ai_bals = AI_cut(bals, 1, 200000)
 
     qsos = wise_detected(qsos)
