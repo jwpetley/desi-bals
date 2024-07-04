@@ -3,7 +3,7 @@ import paths
 import astropy.units as u
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
-import seaborn as sns
+import os
 
 from tqdm import tqdm
 from astropy.table import Table
@@ -125,6 +125,8 @@ if __name__ == "__main__":
     matched = z_six_micron_match(bals, qsos)
 
     matched_ai = z_six_micron_match(bals, ai_bals)
+
+    os.mkdir(paths.data / "matched")
 
     matched.write(paths.data / "matched/matched_qsos.fits", overwrite=True)
     matched_ai.write(paths.data / "matched/matched_ai.fits", overwrite=True)
