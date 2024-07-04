@@ -8,7 +8,7 @@ rule matching:
 
 rule correlation:
     input:
-        directory("src/data/matched")
+        "src/data/matched"
     output:
         "scr/figures/flux_bi.pdf"
     script:
