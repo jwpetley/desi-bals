@@ -149,6 +149,8 @@ if __name__ == "__main__":
 
     axs[2].hist2d(matched["Z"], matched["six_micron"], bins=50, cmap="viridis")
 
+    axs[3].hist2d(matched_ai["Z"], matched_ai["six_micron"], bins=50, cmap="viridis")
+
     axs[0].set_xlabel(r"$z$")
     axs[0].set_ylabel(r"$\log_{10} L_{6 \mu m}$")
     axs[1].set_xlabel(r"$z$")
@@ -157,6 +159,8 @@ if __name__ == "__main__":
     axs[0].set_title("BI BALs")
     axs[1].set_title("QSOs")
     axs[2].set_title("Matched QSOs")
+
+    plt.tight_layout()
 
     plt.savefig(paths.figures / "six_micron_z.pdf", bbox_inches = "tight",
                 dpi = 300)
