@@ -29,6 +29,8 @@ datasets:
     contents:
       - desi_bals_radio.fits: src/data/desi_bals_radio.fits
       - desi_qso_radio.fits: src/data/desi_qso_radio.fits
+  10.5072/zenodo.79843:
+    destination: src/data/matched/
 
 # Custom file dependencies
 dependencies:
