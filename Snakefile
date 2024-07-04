@@ -5,7 +5,7 @@ rule fractions:
     output:
         "src/tex/figures/detection_fraction_z.pdf"
     script:
-        "scr/scripts/detection_fraction.py"
+        "src/scripts/detection_fraction.py"
 
 
 rule matching:
@@ -14,7 +14,7 @@ rule matching:
     cache:
         True
     script:
-        "scr/scripts/matching.py"
+        "src/scripts/matching.py"
 
 rule matching_figures:
     input:
@@ -24,7 +24,7 @@ rule matching_figures:
         "src/tex/figures/matched_detection_fraction.pdf"
         "src/tex/figures/six_micron_z.pdf"
     script:
-        "scr/scripts/matching_figures.py"
+        "src/scripts/matching_figures.py"
 
 rule correlation:
     input:
