@@ -18,6 +18,7 @@ rule matching:
 
 rule matching_figures:
     input:
+        "src/data/matched"
         "src/data/desi_bals_radio.fits"
         "src/data/desi_qso_radio.fits"
     output:
