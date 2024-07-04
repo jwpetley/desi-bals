@@ -1,6 +1,6 @@
 rule matching:
     output:
-        directory("src/data/matched)
+        directory("src/data/matched")
     cache:
         True
     script:
