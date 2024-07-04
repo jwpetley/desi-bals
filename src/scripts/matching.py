@@ -178,6 +178,10 @@ if __name__ == "__main__":
 
     plot_detection_fraction(bals, matched_ai, matched, "matched_detection_fraction.pdf")
 
+    matched.write(paths.data / "matched/matched_qsos.fits", overwrite=True)
+    matched_ai.write(paths.data / "matched/matched_ai.fits", overwrite=True)
+    bals.write(paths.data / "matched/matched_bals.fits", overwrite=True)
+
     
 
 
