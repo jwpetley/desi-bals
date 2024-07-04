@@ -140,39 +140,23 @@ if __name__ == "__main__":
     plt.close()
 
     #Same as a kde plot
-    fig, axs = plt.subplots(1, 2, sharex=True, sharey=True)
+    fig, axs = plt.subplots(2, 2, sharex=True, sharey=True)
     axs = axs.flatten()
-    handles = []
+    
+    axs[0].hist2d(bals["Z"], bals["six_micron"], bins=50, cmap="viridis")
 
-    x = np.array(bals["Z"]).byteswap().newbyteorder()
-    y = np.array(bals["six_micron"]).byteswap().newbyteorder()
-    sns.kdeplot(x = x, y = y, label="BI BALs", ax=axs[0],
-                color = "tab:orange")
-    handles.append(mlines.Line2D([], [], color='tab:orange', label='BI BALs'))
+    axs[1].hist2d(qsos["Z"], qsos["six_micron"], bins=50, cmap="viridis")
 
-    sns.kdeplot(x = np.array(qsos["Z"]).byteswap().newbyteorder(), y = np.array(qsos["six_micron"]).byteswap().newbyteorder(), label="QSOs", ax=axs[0],
-                color = "tab:blue")
-    handles.append(mlines.Line2D([], [], color='tab:blue', label='QSOs'))
+    axs[2].hist2d(matched["Z"], matched["six_micron"], bins=50, cmap="viridis")
 
     axs[0].set_xlabel(r"$z$")
     axs[0].set_ylabel(r"$\log_{10} L_{6 \mu m}$")
-
-    axs[0].legend(handles=handles)
-
-    handles = []
-
-    sns.kdeplot(x = np.array(bals["Z"]).byteswap().newbyteorder(), y = np.array(bals["six_micron"]).byteswap().newbyteorder(), label="BI BALs", ax=axs[1],
-                color = "tab:orange")
-    handles.append(mlines.Line2D([], [], color='tab:orange', label='BI BALs'))
-    
-    sns.kdeplot(x = np.array(matched["Z"]).byteswap().newbyteorder(), y = np.array(matched["six_micron"]).byteswap().newbyteorder(), label="Matched QSOs",ax=axs[1],
-                color = "tab:green")
-    handles.append(mlines.Line2D([], [], color='tab:green', label='Matched QSOs'))
-    
     axs[1].set_xlabel(r"$z$")
+    axs[2].set_xlabel(r"$z$")
     axs[1].set_ylabel(r"$\log_{10} L_{6 \mu m}$")
-
-    axs[1].legend(handles=handles)
+    axs[0].set_title("BI BALs")
+    axs[1].set_title("QSOs")
+    axs[2].set_title("Matched QSOs")
 
     plt.savefig(paths.figures / "six_micron_z.pdf", bbox_inches = "tight",
                 dpi = 300)
