@@ -144,8 +144,9 @@ if __name__ == "__main__":
     axs = axs.flatten()
     handles = []
 
-
-    sns.kdeplot(x = np.array(bals["Z"]).byteswap().newbyteorder(), y = np.array(bals["six_micron"]).byteswap().newbyteorder(), label="BI BALs", ax=axs[0],
+    x = np.array(bals["Z"]).byteswap().newbyteorder()
+    y = np.array(bals["six_micron"]).byteswap().newbyteorder()
+    sns.kdeplot(x = x, y = y, label="BI BALs", ax=axs[0],
                 color = "tab:orange")
     handles.append(mlines.Line2D([], [], color='tab:orange', label='BI BALs'))
 
