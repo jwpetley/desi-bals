@@ -12,4 +12,4 @@ rule correlation:
     output:
         "scr/figures/flux_bi.pdf"
     script:
-        "scr/scripts/correlation.py"
+        "scr/scripts/correlations.py"
