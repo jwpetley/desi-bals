@@ -55,17 +55,25 @@ def plot_detection_fraction(bals, ai_bals, qsos, fname):
     ai_bals_frac, ai_bals_frac_err = detection_fraction_err(ai_bals, bins)
     qsos_frac, qsos_frac_err = detection_fraction_err(qsos, bins)
 
-
-    plt.figure()
-    plt.errorbar(bins[:-1], bals_frac, yerr=bals_frac_err, label="BI BALs",
+    # Two panel figure - Lower panel should have relative fractions
+    fig , axs = plt.subplots(2, 1, sharex=True, gridspec_kw={'height_ratios': [3, 1]})
+    axs[0].errorbar(bins[:-1], bals_frac, yerr=bals_frac_err, label="BI BALs",
                 capsize=4)
-    plt.errorbar(bins[:-1], ai_bals_frac, yerr=ai_bals_frac_err, label="AI BALs",
+    axs[0].errorbar(bins[:-1], ai_bals_frac, yerr=ai_bals_frac_err, label="AI BALs",
                 capsize = 4)
-    plt.errorbar(bins[:-1], qsos_frac, yerr=qsos_frac_err, label="QSOs",
+    axs[0].errorbar(bins[:-1], qsos_frac, yerr=qsos_frac_err, label="QSOs",
                 capsize = 4)
-    plt.xlabel(r"$z$")
-    plt.ylabel("LoTSS Detection fraction")
-    plt.legend()
+    axs[1].set_xlabel(r"$z$")
+    axs[0].set_ylabel("LoTSS Detection fraction")
+    axs[0].legend()
+
+    axs[1].errorbar(bins[:-1], bals_frac/qsos_frac, yerr=bals_frac_err/qsos_frac,
+                label="BI/QSOs", capsize = 4)
+    axs[1].errorbar(bins[:-1], ai_bals_frac/qsos_frac, yerr=ai_bals_frac_err/qsos_frac,
+                label="AI/QSOs", capsize = 4)
+    
+    axs[1].set_ylabel("Relative Fraction")
+    axs[1].legend()
     plt.savefig(paths.figures / fname, bbox_inches = "tight",
                 dpi = 300)
     
